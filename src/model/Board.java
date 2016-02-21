@@ -51,7 +51,7 @@ public class Board {
     }
 
     /**
-     * provides the next available row in a column (1 spot above the highest game piece)
+     * Provides the next available row in a column (1 spot above the highest game piece)
      *
      * @param col Column to search for next available spot (1 to board length)
      * @return row of free spot
@@ -69,6 +69,11 @@ public class Board {
         throw new IndexOutOfBoundsException(); //no free spot in column
     }
 
+    /**
+     * Provides a copy of int array
+     *
+     * @return 2 dimensional int array
+     */
 
     public int[][] getStateArrayCopy() { //creates copy of int array
         int[][] arrCopy = new int[BOARD_SIZE_X][BOARD_SIZE_Y];
@@ -81,6 +86,11 @@ public class Board {
         return arrCopy;
     }
 
+    /**
+     * Provides a copy of int array form of an ArrayList
+     *
+     * @return 2 dimensional ArrayList
+     */
     public List<List<Integer>> getStateArrayListCopy() {  //creates copy of int array in ArrayList form
         List<List<Integer>> arrCopy = new ArrayList<>();
         for (int i = 0; i < board.length; i++) {
@@ -91,18 +101,29 @@ public class Board {
         return arrCopy;
     }
 
-    public int[][] getBoardArray() {
-        return board;
-    }
-
+    /**
+     * Gets size of board
+     *
+     * @return int of board length
+     */
     public int getBoardLength() {
         return BOARD_SIZE_X;
     }
 
+    /**
+     * Sets board to new int array (new pieces played)
+     *
+     * @param arr new 2d int array
+     */
     private void setBoard(int[][] arr) {
         this.board = arr;
     }
 
+    /**
+     * Determines if there are still open moves on the board
+     *
+     * @return true if there are moves available
+     */
     public boolean hasAvailableMoves() {
         for (int i = board.length - 1; i >= 0; i--) {
             if (board[i][board.length - 1] == 0) return true;
@@ -110,6 +131,11 @@ public class Board {
         return false;
     }
 
+    /**
+     * Provides copy of the board
+     *
+     * @return board copy
+     */
     @Override
     public Board clone() {
         Board cloneBoard = new Board();
@@ -124,14 +150,13 @@ public class Board {
      * @param player player in which to evaluate score
      * @return player score
      */
-
     public int getPlayerScore(int player) {
         int pointsX = 0;
         int pointsY = 0;
         int pointsZ = 0;
         boolean endOfBoardX = false;
 
-        //TODO if reach empty spot on board, vert can stop being evaluated - slightly quicker code
+        //TODO if reach empty spot on board, column can stop being evaluated to improve code performance
         //TODO also could make score just evaluate the most recent move and add to previous score - even faster
 
         for (int i = 0; i < board.length; i++) {//vertical score evaluation
@@ -160,7 +185,11 @@ public class Board {
         return pointsX + pointsY + pointsZ;
     }
 
-
+    /**
+     * Calculates hashcode for board
+     *
+     * @return hashcode int
+     */
     @Override
     public int hashCode() {
         StringBuilder sb = new StringBuilder(); //this is used to create a string of numbers of the board state
@@ -173,12 +202,23 @@ public class Board {
         return hashString.hashCode();
     }
 
+    /**
+     * Provides string of int of all pieces on board
+     *
+     * @return string of ints
+     */
     @Override
     public String toString() {
         hashCode();
         return hashString;
     }
 
+    /**
+     * Tests if board equals another board
+     *
+     * @param obj other board
+     * @return true if equal
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {

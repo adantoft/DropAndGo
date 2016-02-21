@@ -10,9 +10,16 @@ public class Node {
     private List<Node> childNodes = new ArrayList<>();
     private Integer depth;
     private Integer action;
-    private Integer evalValue = null;
+    private Integer evalValue = null;  //this is the value of the board based on the evaluation function set in the AI
 
-
+    /**
+     * Node is primarily used to keep track of board states and relationships between boards
+     *
+     * @param parentNode the parent of this Node (what the board was before this board state)
+     * @param board      the board that this node contains
+     * @param action     the action made to get to this board
+     * @param depth      number of layers from the root node
+     */
     public Node(Node parentNode, Board board, Integer action, Integer depth) {
         this.parentNode = parentNode;
         this.board = board;
@@ -36,6 +43,11 @@ public class Node {
         return depth;
     }
 
+    /**
+     * Determines if this mode has children
+     *
+     * @return true if node has children
+     */
     public boolean hasChildren() {
         if (childNodes.isEmpty()) {
             return false;
@@ -44,14 +56,27 @@ public class Node {
         }
     }
 
+    /**
+     * Provides the value of the evaluation as described in the AI
+     *
+     * @return Integer value of board
+     */
     public Integer getEvalValue() {
         return evalValue;
     }
 
+    /**
+     * Sets the value of the evaluation as described in the AI
+     *
+     * @param evalValue value to be set
+     */
     public void setEvalValue(Integer evalValue) {
         this.evalValue = evalValue;
     }
 
+    /**
+     * @return List of child nodes
+     */
     public List<Node> getChildNodes() { //returns list of successor states (children of this node)
 
         if (childNodes.size() == 0) {
@@ -62,6 +87,10 @@ public class Node {
 
     }
 
+    /**
+     * @param player whose success states to get
+     * @return list of child nodes (possible moves from current board for player)
+     */
     public List<Node> getSuccessorStates(int player) { //returns list of successor states (children of this node)
         if (!hasChildren()) {
             makeChildren(player); //makes children if they do not exist
@@ -69,6 +98,11 @@ public class Node {
         return childNodes; //does not check for visiting a state since all states will be a new state (can't undo moves)
     }
 
+    /**
+     * Makes children nodes (available board states -> possible moves) for player
+     *
+     * @param player whose success states to calculate
+     */
     private void makeChildren(int player) { //makes children (all possible moves) from current board state
         //illegal moves cause yield null child nodes
 

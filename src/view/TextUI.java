@@ -2,9 +2,6 @@ package view;
 
 import model.Board;
 
-/**
- * Created by Alex on 2/6/2016.
- */
 public class TextUI {
 
     private Board board;
